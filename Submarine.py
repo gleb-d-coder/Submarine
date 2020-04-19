@@ -67,7 +67,7 @@ MAX_BUB_SPD = 10
 GAP = 100
 
 def create_buble():
-    x = WIDHT + GAP
+    x = WIDTH + GAP
     y = randint(0, HEIGHT)
     r = randint(MIN_BUB_R, MAX_BUB_R)
     id1 = c.create_oval(x - r, y - r, x + r, y + r, outline='white')
@@ -80,20 +80,6 @@ def move_bubbles():
     for i in range(len(bub_id)):
         c.move(bub_id[i], -bub_speed[1], 0)
         
-        
-
-    
-### 006 MAIN GAME LOOP
-BUB_CHANCE = 10
-score = 0
-while true:
-    if randint(1, BUB_CHANCE) == 1:
-        create_buble()
-    clean_up_bubs()
-    score += collision()
-    print(score)
-    window.update()
-    sleep(0.01)
 
 ### 007
 def get_coords(id_num):
@@ -110,7 +96,7 @@ def del_bubbles(i):
 
 ### 009
 def clean_up_bubs():
-    for i in range(len(bub_id[i])-1, -1, -1):
+    for i in range(len(bub_id)-1, -1, -1):
         x, y = get_coords(bub_id[i])
         if x < -GAP:
             del_bubble(i)
@@ -129,3 +115,21 @@ def collision():
             points += (bub_r[bub] + bub_speed[bub])
             del_bubble(bub)
     return points
+
+
+
+
+
+
+
+### 006/010/013 MAIN GAME LOOP
+BUB_CHANCE = 10
+score = 0
+while True:
+    if randint(1, BUB_CHANCE) == 1:
+        create_buble()
+    clean_up_bubs()
+    score += collision()
+    print(score)
+    window.update()
+    sleep(0.01)
