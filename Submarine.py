@@ -126,10 +126,6 @@ def show_time(time_left):
     c.itomcomfig(time_text, text, text=str(score))
 
 
-
-
-
-
 ### 006/010/013 MAIN GAME LOOP
 BUB_CHANCE = 10
 score = 0
@@ -142,14 +138,14 @@ while True:
     window.update()
     sleep(0.01)
 
-###15   
-from time import sleep, time
+### 015   
 BUB_CHANCE = 10
 TIME_LEMIT = 40
 BONUS_SCORE = 1000
 score = 0
 bonus = 0
 end = time() + TIME_LEMIT
+
 ###16
 #MAIN GAME LOOP
 while time() < end:
