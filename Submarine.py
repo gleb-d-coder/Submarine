@@ -20,7 +20,7 @@ from time import sleep, time
 HEIGHT = 500
 WIDTH = 800
 window = Tk()
-window.title("Buble blaster")
+window.title("Buble Blaster")
 c = Canvas(window, width=WIDTH, height=HEIGHT, bg='DARKBLUE')
 c.pack()
 
@@ -78,7 +78,7 @@ def create_buble():
 ### 005 Move bubbles
 def move_bubbles():
     for i in range(len(bub_id)):
-        c.move(bub_id[i], -bub_speed[1], 0)
+        c.move(bub_id[i], -bub_speed[i], 0)
         
 
 ### 007
@@ -86,6 +86,7 @@ def get_coords(id_num):
     pos = c.coords(id_num)
     x = (pos[0] + pos[2])/2
     y = (pos[1] + pos[3])/2
+    return x, y
 
 ### 008
 def del_bubbles(i):
@@ -103,8 +104,8 @@ def clean_up_bubs():
 
 ### 011
 def distance(id1, id2):
-    x1, y1 = get_cords(id1)
-    x2, y2 = get_cords(id2)
+    x1, y1 = get_coords(id1)
+    x2, y2 = get_coords(id2)
     return sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
 ### 012
@@ -115,55 +116,43 @@ def collision():
             points += (bub_r[bub] + bub_speed[bub])
             del_bubble(bub)
     return points
-###14
+
+### 014
 c.create_text(50, 30, text='TIME', fill='white' )
 c.create_text(150, 30, text='SCORE', fill='white')
-time_text = c.create-text(50, 50, fill='white' )
-score_text = c.create_text(150, 50, fill='white' )
+time_text = c.create_text(50, 50, fill='white')
+score_text = c.create_text(150, 50, fill='white')
 def show_score(score):
-    c.itemcomfing(score_text, text=str(score))
+    c.itemconfig(score_text, text=str(score))
 def show_time(time_left):
-    c.itomcomfig(time_text, text, text=str(score))
+    c.itemconfig(time_text, text=str(time_left))
 
 
-### 006/010/013 MAIN GAME LOOP
+### 015 INIT GAME PARAMETERS
 BUB_CHANCE = 10
+TIME_LIMIT = 40
+BONUS_SCORE = 1000
 score = 0
-while True:
+bonus = 0
+end = time() + TIME_LIMIT
+### 006/010/013/016 MAIN GAME LOOP
+while time() < end:
     if randint(1, BUB_CHANCE) == 1:
         create_buble()
     clean_up_bubs()
     score += collision()
-    print(score)
-    window.update()
-    sleep(0.01)
-
-### 015   
-BUB_CHANCE = 10
-TIME_LEMIT = 40
-BONUS_SCORE = 1000
-score = 0
-bonus = 0
-end = time() + TIME_LEMIT
-
-###16
-#MAIN GAME LOOP
-while time() < end:
-    if randint(1, BUB_CHANCE) == 1:
-        create_bubble()
-    move_bubbles()
-    clen_up_bubs()
-    if(int(score / BONUS_SCORE)) > bonus:
+    if (int(score / BONUS_SCORE)) > bonus:
         bonus += 1
-        end += TIME_LEMIT
+        end += TIME_LIMIT
     show_score(score)
     show_time(int(end - time()))
+    #print(score)
     window.update()
     sleep(0.01)
-    ###17
-   c.create_text(MID_X, MID_Y, \
-        text='GAME OVER', fill='white', font=('Helvetica',30))
-   c.create_text(MID_X, MID_Y + 30, \
-        text+'Score: '+ str(score), fill='white')
-   c.create_text(MID_X, MID_Y + 45, \
-                 text+'Bonus time: '+ str(bonus*TIME_LIMIT), fill+'white') 
+
+
+c.create_text(MID_X, MID_Y, text='GAME OVER', fill='white', font=('Helvetica',30))
+c.create_text(MID_X, MID_Y + 30, \
+    text+'Score: '+ str(score), fill='white')
+c.create_text(MID_X, MID_Y + 45, \
+    text+'Bonus time: '+ str(bonus*TIME_LIMIT), fill+'white') 
