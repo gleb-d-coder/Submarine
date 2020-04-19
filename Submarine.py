@@ -68,7 +68,7 @@ MAX_BUB_SPD = 10
 GAP = 100
 
 
-def create_buble():
+def create_bubble():
     x = WIDTH + GAP
     y = randint(0, HEIGHT)
     r = randint(MIN_BUB_R, MAX_BUB_R)
@@ -85,7 +85,7 @@ def move_bubbles():
 
 
 # 007
-def get_coords(id_num):
+def get_coordinates(id_num):
     pos = c.coords(id_num)
     x = (pos[0] + pos[2]) / 2
     y = (pos[1] + pos[3]) / 2
@@ -101,24 +101,24 @@ def del_bubble(i):
 
 
 # 009
-def clean_up_bubs():
+def clean_up_bubbles():
     for i in range(len(bub_id) - 1, -1, -1):
-        x, y = get_coords(bub_id[i])
+        x, y = get_coordinates(bub_id[i])
         if x < -GAP:
             del_bubble(i)
 
 
 # 011
 def distance(id1, id2):
-    x1, y1 = get_coords(id1)
-    x2, y2 = get_coords(id2)
+    x1, y1 = get_coordinates(id1)
+    x2, y2 = get_coordinates(id2)
     return sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
 
-# 012
+# 012 If submarine touches bubble then delete bubble
 def collision():
     points = 0
-    for bub in range(len(bub_id) - 1, -1, -1, ):
+    for bub in range(len(bub_id) - 1, -1, -1):
         if distance(ship_id2, bub_id[bub]) < (SHIP_R + bub_r[bub]):
             points += (bub_r[bub] + bub_speed[bub])
             del_bubble(bub)
@@ -132,8 +132,8 @@ time_text = c.create_text(50, 50, fill='white')
 score_text = c.create_text(150, 50, fill='white')
 
 
-def show_score(score):
-    c.itemconfig(score_text, text=str(score))
+def show_score(player_score):
+    c.itemconfig(score_text, text=str(player_score))
 
 
 def show_time(time_left):
@@ -142,16 +142,19 @@ def show_time(time_left):
 
 # 015 INIT GAME PARAMETERS
 BUB_CHANCE = 10
-TIME_LIMIT = 40
+TIME_LIMIT = 30
 BONUS_SCORE = 1000
 score = 0
 bonus = 0
 end = time() + TIME_LIMIT
+
+
 # 006/010/013/016 MAIN GAME LOOP
 while time() < end:
     if randint(1, BUB_CHANCE) == 1:
-        create_buble()
-    clean_up_bubs()
+        create_bubble()
+    move_bubbles()
+    clean_up_bubbles()
     score += collision()
     if (int(score / BONUS_SCORE)) > bonus:
         bonus += 1
