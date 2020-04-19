@@ -19,17 +19,34 @@ c.move(ship_id, MID_X, MID_Y)
 c.move(ship_id2, MID_X, MID_Y)
 SHIP_SPD = 5
 def move_ship(event):
-    if event.keysym == 'w':         # Up
+    # Up
+    if event.keysym == 'w':         
          c.move(ship_id, 0, -SHIP_SPD)
          c.move(ship_id2, 0, -SHIP_SPD)
-    elif event.keysym == 's':       # Down
+    # Down
+    elif event.keysym == 's':       
         c.move(ship_id, 0, SHIP_SPD)
         c.move(ship_id2, 0, SHIP_SPD)
-    elif event.keysym == 'a':       # Left
+    # Left
+    elif event.keysym == 'a':       
         c.move(ship_id, -SHIP_SPD, 0)
         c.move(ship_id2, -SHIP_SPD, 0)
-    elif event.keysym == 'd':       # Right
+    # Right
+    elif event.keysym == 'd':       
         c.move(ship_id, SHIP_SPD, 0)
         c.move(ship_id2, SHIP_SPD, 0)
 c.bind_all('<Key>', move_ship)
-
+from random import randint
+bub_id = list()
+bub_r = list()
+bub_speed = list()
+MIN_BUB_R = 10
+MAX_BUB_R = 30
+MAX_BUB_SPD = 10
+GAP = 100
+def create_buble():
+    x = WIDHT + GAP
+    y = randint(0, HEIGHT)
+    r = randint(MIN_BUB_R, MAX_BUB_R)
+    id1 = c.create_oval
+    
